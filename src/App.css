@@ -1,38 +1,52 @@
-.App {
-  text-align: center;
+/* Music toggle button styles */
+.music-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 100;
+  padding: 10px;
+  transition: all 0.3s ease;
+  outline: none;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.music-icon {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.2s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.music-toggle:hover .music-icon {
+  transform: scale(1.1);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Pulse animation when music is playing */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.music-toggle.playing .music-icon {
+  animation: pulse 2s infinite;
+}
+
+/* Audio prompt styles */
+.audio-prompt {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
   color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  animation: fadeIn 0.5s ease;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
