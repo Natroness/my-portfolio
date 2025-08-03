@@ -3,6 +3,9 @@ import FuzzyText from './FuzzyText';
 import './App.css';
 import MuteIcon from './Mute.png';
 import UnmuteIcon from './Unmute.png';
+import WarningBanner from './components/WarningBanner';
+
+
 
 function App() {
   const hoverIntensity = 0.5;
@@ -79,6 +82,13 @@ function App() {
           Click the speaker to enable music
         </div>
       )}
+
+      {/* Warning Banner (Your custom notice card) */}
+      <WarningBanner
+        headerText="Before you proceed..."
+        bodyText="Marked by code, driven by design. Enter if you dare to witness the lair."
+        confirmLabel="Enter the Lair"
+      />
 
       {/* Main Content */}
       <FuzzyText 
