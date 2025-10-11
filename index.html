@@ -30,7 +30,7 @@
             background-color: #ffffff;
             border-radius: 50%;
             animation: bounceScale 3s ease-in-out forwards;
-            z-index: 1;
+            z-index: 3;
         }
         
         @keyframes bounceScale {
@@ -50,10 +50,63 @@
                 transform: translate(-50%, -50%) scale(1);
             }
         }
+        
+        .corner-image {
+            position: absolute;
+            max-width: 450px;
+            max-height: 450px;
+            z-index: 2;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0px, 0px) rotate(0deg);
+            }
+            25% {
+                transform: translate(5px, -8px) rotate(1deg);
+            }
+            50% {
+                transform: translate(-3px, -12px) rotate(-0.5deg);
+            }
+            75% {
+                transform: translate(-8px, -6px) rotate(0.8deg);
+            }
+            100% {
+                transform: translate(0px, 0px) rotate(0deg);
+            }
+        }
+        
+        .top-left {
+            top: 20px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+        
+        .top-right {
+            top: 20px;
+            right: 20px;
+        }
+        
+        .bottom-left {
+            bottom: 20px;
+            left: 20px;
+        }
+        
+        .bottom-right {
+            bottom: 20px;
+            right: 20px;
+            animation-delay: 2s;
+        }
     </style>
 </head>
 <body>
     <div class="bouncing-circle"></div>
+    
+    <!-- Corner Images -->
+    <img src="src/images/Hat.png" alt="Hat" class="corner-image top-left">
+    <img src="src/images/Luffyroger.png" alt="Luffy Roger" class="corner-image bottom-right">
+    
     <script type="module" src="dist/index.js"></script>
 </body>
 </html>
