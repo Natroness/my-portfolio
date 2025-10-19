@@ -29,7 +29,7 @@
         .top-left{top:80px;left:20px}
         .bottom-right{bottom:20px;right:20px;animation-delay:2s}
         
-        .luffy-image{position:absolute;max-width:1000px;max-height:1000px;z-index:5;left:50%;bottom:45%;transform:translateX(-50%) translateY(290px);opacity:0;animation:showLuffyImage 0.1s ease-in-out 5s forwards, riseAndFloat 6s ease-out 5s forwards}
+        .luffy-image{position:absolute;max-width:1000px;max-height:1000px;z-index:5;left:50%;bottom:45%;transform:translateX(-50%) translateY(290px);opacity:0;animation:showLuffyImage 0.1s ease-in-out 5s forwards, riseAndFloat 6s ease-out 5s forwards, luffyFloat 3s ease-in-out 11s infinite}
         .luffy-image.floating{animation:luffyFloat 3s ease-in-out infinite}
         
         /* Circles */
@@ -47,6 +47,7 @@
         
         @keyframes bounceScale{0%{width:50px;height:50px}50%{width:650px;height:650px}100%{width:530px;height:530px}}
         @keyframes float{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(5px,-8px) rotate(1deg)}50%{transform:translate(-3px,-12px) rotate(-.5deg)}75%{transform:translate(-8px,-6px) rotate(.8deg)}100%{transform:translate(0,0) rotate(0)}}
+        @keyframes riseAndFloat{0%{bottom:-200px;transform:translateX(-50%) translateY(0)}60%{bottom:45%;transform:translateX(-50%) translateY(290px)}100%{bottom:45%;transform:translateX(-50%) translateY(290px)}}
         @keyframes luffyFloat{0%,100%{transform:translateX(-50%) translateY(290px)}25%{transform:translateX(-50%) translateY(280px)}50%{transform:translateX(-50%) translateY(295px)}75%{transform:translateX(-50%) translateY(285px)}}
         
         /* TrueFocus Effect */
