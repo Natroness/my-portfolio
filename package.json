@@ -1,19 +1,12 @@
 {
-  "name": "pitch-black-webpage",
+  "name": "nikesh-paudyal-portfolio",
   "version": "1.0.0",
-  "description": "A pitch black webpage built with TypeScript",
-  "main": "dist/index.js",
+  "description": "Nikesh Paudyal's Portfolio Website",
+  "main": "index.html",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "serve": "npx http-server . -p 3000"
+    "serve": "python3 -m http.server 3000"
   },
-  "devDependencies": {
-    "typescript": "^5.3.0",
-    "@types/node": "^20.10.0",
-    "http-server": "^14.1.1"
-  },
-  "keywords": ["typescript", "webpage", "black"],
-  "author": "",
+  "keywords": ["portfolio", "webpage", "nikesh", "paudyal"],
+  "author": "Nikesh Paudyal",
   "license": "MIT"
 }
