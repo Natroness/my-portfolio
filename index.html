@@ -7,17 +7,22 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#000;height:100vh;overflow:hidden}
-        .bouncing-circle{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:#fff;border-radius:50%;animation:bounceScale 3s ease-in-out forwards;z-index:3;box-shadow:0 0 20px rgba(255,255,255,.8),0 0 40px rgba(255,255,255,.6),0 0 60px rgba(255,255,255,.4),0 0 80px rgba(255,255,255,.3),0 0 100px rgba(255,255,255,.2),0 0 120px rgba(255,255,255,.15),0 0 140px rgba(255,255,255,.1),0 0 160px rgba(255,255,255,.08),0 0 180px rgba(255,255,255,.06),0 0 200px rgba(255,255,255,.04),0 0 250px rgba(255,255,255,.02),0 0 300px rgba(255,255,255,.01),0 0 350px rgba(255,255,255,.005)}
+        .bouncing-circle{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:#fff;border-radius:50%;animation:bounceScale 3s ease-in-out 5s forwards;z-index:3;opacity:0;animation:showBouncingCircle 0.1s ease-in-out 5s forwards, bounceScale 3s ease-in-out 5s forwards;box-shadow:0 0 20px rgba(142,3,186,.8),0 0 40px rgba(142,3,186,.6),0 0 60px rgba(142,3,186,.4),0 0 80px rgba(142,3,186,.3),0 0 100px rgba(142,3,186,.2),0 0 120px rgba(142,3,186,.15),0 0 140px rgba(142,3,186,.1),0 0 160px rgba(142,3,186,.08),0 0 180px rgba(142,3,186,.06),0 0 200px rgba(142,3,186,.04),0 0 250px rgba(142,3,186,.02),0 0 300px rgba(142,3,186,.01),0 0 350px rgba(142,3,186,.005)}
         @keyframes bounceScale{0%{width:50px;height:50px}50%{width:650px;height:650px}100%{width:530px;height:530px}}
-        .corner-image{position:absolute;max-width:450px;max-height:450px;z-index:2;animation:float 4s ease-in-out infinite}
+        @keyframes showAfterHello{0%{opacity:0}100%{opacity:1}}
+        .corner-image{position:absolute;max-width:450px;max-height:450px;z-index:2;animation:float 4s ease-in-out infinite;opacity:0;animation:showImages 0.1s ease-in-out 5s forwards, float 4s ease-in-out 5s infinite}
         @keyframes float{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(5px,-8px) rotate(1deg)}50%{transform:translate(-3px,-12px) rotate(-.5deg)}75%{transform:translate(-8px,-6px) rotate(.8deg)}100%{transform:translate(0,0) rotate(0)}}
+        @keyframes showImages{0%{opacity:0}100%{opacity:1}}
+        @keyframes showLuffyImage{0%{opacity:0}100%{opacity:1}}
+        @keyframes showNavButtons{0%{opacity:0}100%{opacity:1}}
+        @keyframes showBouncingCircle{0%{opacity:0}100%{opacity:1}}
         .top-left{top:80px;left:20px}
         .bottom-right{bottom:20px;right:20px;animation-delay:2s}
-        .luffy-image{position:absolute;max-width:1000px;max-height:1000px;z-index:5;left:50%;bottom:45%;transform:translateX(-50%) translateY(290px);animation:riseAndFloat 6s ease-out forwards}
+        .luffy-image{position:absolute;max-width:1000px;max-height:1000px;z-index:5;left:50%;bottom:45%;transform:translateX(-50%) translateY(290px);animation:riseAndFloat 6s ease-out 5s forwards;opacity:0;animation:showLuffyImage 0.1s ease-in-out 5s forwards, riseAndFloat 6s ease-out 5s forwards}
         .luffy-image.floating{animation:luffyFloat 3s ease-in-out infinite}
         @keyframes riseAndFloat{0%{bottom:-200px;transform:translateX(-50%) translateY(0)}60%{bottom:45%;transform:translateX(-50%) translateY(290px)}100%{bottom:45%;transform:translateX(-50%) translateY(290px)}}
         @keyframes luffyFloat{0%,100%{transform:translateX(-50%) translateY(290px)}25%{transform:translateX(-50%) translateY(280px)}50%{transform:translateX(-50%) translateY(295px)}75%{transform:translateX(-50%) translateY(285px)}}
-        .nav-buttons{position:absolute;top:20px;left:50%;transform:translateX(-50%);display:flex;gap:40px;z-index:7}
+        .nav-buttons{position:absolute;top:20px;left:50%;transform:translateX(-50%);display:flex;gap:40px;z-index:7;opacity:0;animation:showNavButtons 0.1s ease-in-out 5s forwards}
         .nav-btn{color:#8e03ba;text-decoration:none;font-family:'Black Ops One',monospace;font-size:18px;padding:12px 24px;border-radius:8px;transition:all 0.3s ease;position:relative;overflow:hidden}
         .nav-btn:hover{background:#8e03ba;color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(142,3,186,0.3)}
         .luffy-text{position:absolute;left:12.5%;width:75%;z-index:4;font-family:'Black Ops One',monospace;color:#8e03ba;text-align:center;pointer-events:none}
@@ -25,6 +30,12 @@
         .luffy-sub{font-size:32px;top:calc(60% + 200px);opacity:0.8;letter-spacing:8px}
         .luffy-stroke{position:absolute;left:12.5%;width:75%;z-index:6;font-family:'Black Ops One',monospace;color:transparent;text-align:center;pointer-events:none;-webkit-text-stroke:3px #8e03ba}
         .luffy-stroke-main{font-size:280px;font-weight:bold;top:calc(25% + 200px);letter-spacing:20px}
+        .hello-text{position:absolute;left:12.5%;width:75%;z-index:8;font-family:'Black Ops One',monospace;color:#8e03ba;text-align:center;pointer-events:none;font-size:120px;font-weight:bold;letter-spacing:8px}
+        .hello-line1{top:calc(15% + 50px);animation:helloFadeOut 2s ease-in-out 3s forwards}
+        .hello-line2{top:calc(5% + 20px);animation:helloFadeOut 2s ease-in-out 3s forwards}
+        .hello-dot{color:#fff;animation:dotToCircle 2s ease-in-out 3s forwards}
+        @keyframes helloFadeOut{0%{opacity:1}100%{opacity:0}}
+        @keyframes dotToCircle{0%{color:#fff;font-size:120px;position:relative}50%{color:#fff;font-size:120px;position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:#fff;box-shadow:0 0 20px rgba(142,3,186,.8),0 0 40px rgba(142,3,186,.6),0 0 60px rgba(142,3,186,.4),0 0 80px rgba(142,3,186,.3),0 0 100px rgba(142,3,186,.2),0 0 120px rgba(142,3,186,.15),0 0 140px rgba(142,3,186,.1),0 0 160px rgba(142,3,186,.08),0 0 180px rgba(142,3,186,.06),0 0 200px rgba(142,3,186,.04),0 0 250px rgba(142,3,186,.02),0 0 300px rgba(142,3,186,.01),0 0 350px rgba(142,3,186,.005)}100%{color:#fff;font-size:120px;position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:#fff;box-shadow:0 0 20px rgba(142,3,186,.8),0 0 40px rgba(142,3,186,.6),0 0 60px rgba(142,3,186,.4),0 0 80px rgba(142,3,186,.3),0 0 100px rgba(142,3,186,.2),0 0 120px rgba(142,3,186,.15),0 0 140px rgba(142,3,186,.1),0 0 160px rgba(142,3,186,.08),0 0 180px rgba(142,3,186,.06),0 0 200px rgba(142,3,186,.04),0 0 250px rgba(142,3,186,.02),0 0 300px rgba(142,3,186,.01),0 0 350px rgba(142,3,186,.005)}}
         @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
     </style>
 </head>
@@ -38,10 +49,11 @@
     <div class="bouncing-circle"></div>
     <img src="src/images/Hat.png" alt="Hat" class="corner-image top-left">
     <img src="src/images/Luffyroger.png" alt="Luffy Roger" class="corner-image bottom-right">
-    <div class="luffy-text luffy-main">LUFFY</div>
-    <div class="luffy-text luffy-sub">MONKEY D.</div>
+    <div class="hello-text hello-line1">HELLO ITS ME<span class="hello-dot">.</span></div>
+    <div class="luffy-text luffy-main" style="opacity:0;animation:showAfterHello 0.1s ease-in-out 5s forwards">NIKESH</div>
+    <div class="luffy-text luffy-sub" style="opacity:0;animation:showAfterHello 0.1s ease-in-out 5s forwards">PAUDYAL</div>
     <img src="src/images/Luffy.png" alt="Luffy" class="luffy-image">
-    <div class="luffy-stroke luffy-stroke-main">LUFFY</div>
-    <script>document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>document.querySelector('.luffy-image').classList.add('floating'),6000)})</script>
+    <div class="luffy-stroke luffy-stroke-main" style="opacity:0;animation:showAfterHello 0.1s ease-in-out 5s forwards">NIKESH</div>
+    <script>document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>document.querySelector('.luffy-image').classList.add('floating'),11000)})</script>
 </body>
 </html>
