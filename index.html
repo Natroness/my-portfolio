@@ -33,7 +33,7 @@
         .luffy-image.floating{animation:luffyFloat 3s ease-in-out infinite}
         
         /* Circles */
-        .bouncing-circle{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:#fff;border-radius:50%;z-index:3;opacity:0;animation:showBouncingCircle 0.1s ease-in-out 5s forwards, bounceScale 3s ease-in-out 5s forwards;box-shadow:0 0 20px rgba(142,3,186,.8),0 0 40px rgba(142,3,186,.6),0 0 60px rgba(142,3,186,.4),0 0 80px rgba(142,3,186,.3),0 0 100px rgba(142,3,186,.2),0 0 120px rgba(142,3,186,.15),0 0 140px rgba(142,3,186,.1),0 0 160px rgba(142,3,186,.08),0 0 180px rgba(142,3,186,.06),0 0 200px rgba(142,3,186,.04),0 0 250px rgba(142,3,186,.02),0 0 300px rgba(142,3,186,.01),0 0 350px rgba(142,3,186,.005)}
+        .bouncing-circle{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:#fff;border-radius:50%;z-index:3;opacity:0;animation:showBouncingCircle 0.1s ease-in-out 5s forwards, bounceScale 6s ease-out 5s forwards;box-shadow:0 0 30px rgba(142,3,186,.6),0 0 60px rgba(142,3,186,.4),0 0 90px rgba(142,3,186,.3),0 0 120px rgba(142,3,186,.2),0 0 150px rgba(142,3,186,.1);will-change:transform,width,height;backface-visibility:hidden;transform-style:preserve-3d}
         .hello-dot{color:#fff;position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(142,3,186,.8),0 0 20px rgba(142,3,186,.6),0 0 30px rgba(142,3,186,.4);opacity:0;animation:showHelloDot 0.1s ease-in-out 5s forwards}
         
         /* Animations */
@@ -45,7 +45,7 @@
         @keyframes showBouncingCircle{0%{opacity:0}100%{opacity:1}}
         @keyframes showHelloDot{0%{opacity:0}100%{opacity:1}}
         
-        @keyframes bounceScale{0%{width:50px;height:50px}50%{width:650px;height:650px}100%{width:530px;height:530px}}
+        @keyframes bounceScale{0%{width:50px;height:50px;transform:translate(-50%,-50%) scale(1)}60%{width:600px;height:600px;transform:translate(-50%,-50%) scale(1.05)}100%{width:530px;height:530px;transform:translate(-50%,-50%) scale(1)}}
         @keyframes float{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(5px,-8px) rotate(1deg)}50%{transform:translate(-3px,-12px) rotate(-.5deg)}75%{transform:translate(-8px,-6px) rotate(.8deg)}100%{transform:translate(0,0) rotate(0)}}
         @keyframes riseAndFloat{0%{bottom:-200px;transform:translateX(-50%) translateY(0)}60%{bottom:45%;transform:translateX(-50%) translateY(290px)}100%{bottom:45%;transform:translateX(-50%) translateY(290px)}}
         @keyframes luffyFloat{0%,100%{transform:translateX(-50%) translateY(290px)}25%{transform:translateX(-50%) translateY(280px)}50%{transform:translateX(-50%) translateY(295px)}75%{transform:translateX(-50%) translateY(285px)}}
