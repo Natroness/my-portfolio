@@ -1,12 +1,27 @@
 {
-  "name": "nikesh-paudyal-portfolio",
+  "name": "truefocus-demo",
   "version": "1.0.0",
-  "description": "Nikesh Paudyal's Portfolio Website",
-  "main": "index.html",
+  "description": "TrueFocus animated cursor effect demo",
+  "main": "index.js",
   "scripts": {
-    "serve": "python3 -m http.server 3000"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "keywords": ["portfolio", "webpage", "nikesh", "paudyal"],
-  "author": "Nikesh Paudyal",
-  "license": "MIT"
+  "dependencies": {
+    "react-scripts": "5.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
