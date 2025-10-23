@@ -9,24 +9,24 @@
         body{background:#000;height:100vh;overflow:hidden;font-family:'Black Ops One',monospace}
         
         /* Navigation */
-        .nav-buttons{position:absolute;top:20px;left:50%;transform:translateX(-50%);display:flex;gap:40px;z-index:7;opacity:0;animation:showNavButtons 0.1s ease-in-out 5s forwards}
+        .nav-buttons{position:absolute;top:20px;left:50%;transform:translateX(-50%);display:flex;gap:40px;z-index:7;opacity:1}
         .nav-btn{color:#8e03ba;text-decoration:none;font-size:18px;padding:12px 24px;border-radius:8px;transition:all 0.3s ease;position:relative;overflow:hidden}
         .nav-btn:hover{background:#8e03ba;color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(142,3,186,0.3)}
         
         /* Text Elements */
-        .hello-text{position:absolute;left:5%;width:90%;z-index:8;color:#8e03ba;text-align:left;pointer-events:none;font-size:120px;font-weight:bold;letter-spacing:8px}
-        .hello-line1{top:calc(8% + 20px);animation:helloFadeOut 2s ease-in-out 3s forwards}
-        .hello-line2{top:calc(18% + 80px);animation:helloFadeOut 2s ease-in-out 3s forwards}
+        .hello-text{position:absolute;left:5%;width:90%;z-index:8;color:#8e03ba;text-align:left;pointer-events:none;font-size:120px;font-weight:bold;letter-spacing:8px;display:none}
+        .hello-line1{top:calc(8% + 20px);animation:helloFadeOut 2s ease-in-out 3s forwards;display:none}
+        .hello-line2{top:calc(18% + 80px);animation:helloFadeOut 2s ease-in-out 3s forwards;display:none}
         
-        .luffy-text{position:absolute;left:12.5%;width:75%;z-index:4;color:#8e03ba;text-align:center;pointer-events:none}
-        .luffy-main{font-size:280px;font-weight:bold;top:calc(25% + 150px);letter-spacing:20px}
+        .luffy-text{position:absolute;left:12.5%;width:75%;z-index:4;color:#8e03ba;text-align:center;pointer-events:none;opacity:1}
+        .luffy-main{font-size:280px;font-weight:bold;top:calc(25% + 150px);letter-spacing:20px;opacity:1}
         .luffy-sub{font-size:32px;top:calc(60% + 150px);opacity:0.8;letter-spacing:8px}
         .luffy-stroke{position:absolute;left:12.5%;width:75%;z-index:6;color:transparent;text-align:center;pointer-events:none;-webkit-text-stroke:3px #8e03ba}
         .luffy-stroke-main{font-size:280px;font-weight:bold;top:calc(25% + 150px);letter-spacing:20px}
         
         /* Images */
-        .corner-image{position:absolute;max-width:450px;max-height:450px;z-index:2;opacity:0;animation:showImages 0.1s ease-in-out 5s forwards, float 4s ease-in-out 5s infinite}
-        .corner-image.top-left{max-width:1800px;max-height:1800px;top:80px;left:20px;transform:translate(-50%, -50%)}
+        .corner-image{position:absolute;max-width:450px;max-height:450px;z-index:2;opacity:1;animation:float 4s ease-in-out infinite}
+        .corner-image.top-left{max-width:1800px;max-height:1800px;top:20px;left:20px;transform:translate(-50%, -50%)}
         .top-left{top:80px;left:20px}
         .bottom-right{bottom:20px;right:20px;animation-delay:2s}
         
