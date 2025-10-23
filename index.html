@@ -14,9 +14,6 @@
         .nav-btn:hover{background:#8e03ba;color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(142,3,186,0.3)}
         
         /* Text Elements */
-        .hello-text{position:absolute;left:5%;width:90%;z-index:8;color:#8e03ba;text-align:left;pointer-events:none;font-size:120px;font-weight:bold;letter-spacing:8px;display:none}
-        .hello-line1{top:calc(8% + 20px);animation:helloFadeOut 2s ease-in-out 3s forwards;display:none}
-        .hello-line2{top:calc(18% + 80px);animation:helloFadeOut 2s ease-in-out 3s forwards;display:none}
         
         .luffy-text{position:absolute;left:12.5%;width:75%;z-index:4;color:#8e03ba;text-align:center;pointer-events:none;opacity:1}
         .luffy-main{font-size:280px;font-weight:bold;top:calc(25% + 150px);letter-spacing:20px;opacity:1}
@@ -30,91 +27,23 @@
         .top-left{top:80px;left:20px}
         .bottom-right{bottom:20px;right:20px;animation-delay:2s}
         
-        .luffy-image{position:absolute;max-width:1000px;max-height:1000px;z-index:5;left:50%;bottom:45%;transform:translateX(-50%) translateY(290px);opacity:0;animation:showLuffyImage 0.1s ease-in-out 5s forwards, riseAndFloat 6s ease-out 5s forwards, luffyFloat 3s ease-in-out 11s infinite}
+        .luffy-image{position:absolute;max-width:1000px;max-height:1000px;z-index:5;left:50%;bottom:45%;transform:translateX(-50%) translateY(290px);opacity:1;animation:luffyFloat 3s ease-in-out infinite}
         .luffy-image.floating{animation:luffyFloat 3s ease-in-out infinite}
         
         /* Circles */
-        .bouncing-circle{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:#fff;border-radius:50%;z-index:3;opacity:0;animation:showBouncingCircle 0.1s ease-in-out 5s forwards, bounceScale 6s ease-out 5s forwards;box-shadow:0 0 30px rgba(142,3,186,.6),0 0 60px rgba(142,3,186,.4),0 0 90px rgba(142,3,186,.3),0 0 120px rgba(142,3,186,.2),0 0 150px rgba(142,3,186,.1);will-change:transform,width,height;backface-visibility:hidden;transform-style:preserve-3d}
+        .bouncing-circle{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:#fff;border-radius:50%;z-index:3;opacity:1;animation:bounceScale 6s ease-out forwards;box-shadow:0 0 30px rgba(142,3,186,.6),0 0 60px rgba(142,3,186,.4),0 0 90px rgba(142,3,186,.3),0 0 120px rgba(142,3,186,.2),0 0 150px rgba(142,3,186,.1);will-change:transform,width,height;backface-visibility:hidden;transform-style:preserve-3d}
         .hello-dot{color:#fff;position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(142,3,186,.8),0 0 20px rgba(142,3,186,.6),0 0 30px rgba(142,3,186,.4);opacity:0;animation:showHelloDot 0.1s ease-in-out 5s forwards}
         
         /* Animations */
-        @keyframes helloFadeOut{0%{opacity:1}100%{opacity:0}}
         @keyframes showAfterHello{0%{opacity:0}100%{opacity:1}}
-        @keyframes showImages{0%{opacity:0}100%{opacity:1}}
         @keyframes showLuffyImage{0%{opacity:0}100%{opacity:1}}
-        @keyframes showNavButtons{0%{opacity:0}100%{opacity:1}}
         @keyframes showBouncingCircle{0%{opacity:0}100%{opacity:1}}
-        @keyframes showHelloDot{0%{opacity:0}100%{opacity:1}}
         
         @keyframes bounceScale{0%{width:50px;height:50px;transform:translate(-50%,-50%) scale(1)}60%{width:600px;height:600px;transform:translate(-50%,-50%) scale(1.05)}100%{width:530px;height:530px;transform:translate(-50%,-50%) scale(1)}}
         @keyframes float{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(5px,-8px) rotate(1deg)}50%{transform:translate(-3px,-12px) rotate(-.5deg)}75%{transform:translate(-8px,-6px) rotate(.8deg)}100%{transform:translate(0,0) rotate(0)}}
         @keyframes riseAndFloat{0%{bottom:-200px;transform:translateX(-50%) translateY(0)}60%{bottom:45%;transform:translateX(-50%) translateY(290px)}100%{bottom:45%;transform:translateX(-50%) translateY(290px)}}
         @keyframes luffyFloat{0%,100%{transform:translateX(-50%) translateY(290px)}25%{transform:translateX(-50%) translateY(280px)}50%{transform:translateX(-50%) translateY(295px)}75%{transform:translateX(-50%) translateY(285px)}}
         
-        /* TrueFocus Effect */
-        .truefocus-container {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .truefocus-word {
-            position: relative;
-            cursor: pointer;
-            transition: filter 0.3s ease, color 0.3s ease;
-            filter: blur(5px);
-        }
-        
-        .truefocus-word.active {
-            filter: blur(0);
-        }
-        
-        .truefocus-frame {
-            position: absolute;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            box-sizing: content-box;
-            border: none;
-            transition: opacity 0.5s ease-out;
-        }
-        
-        .corner {
-            position: absolute;
-            width: 1rem;
-            height: 1rem;
-            border: 3px solid var(--border-color, #fff);
-            filter: drop-shadow(0px 0px 4px var(--border-color, #fff));
-            border-radius: 3px;
-            transition: none;
-        }
-        
-        .top-left {
-            top: -10px;
-            left: -10px;
-            border-right: none;
-            border-bottom: none;
-        }
-        
-        .top-right {
-            top: -10px;
-            right: -10px;
-            border-left: none;
-            border-bottom: none;
-        }
-        
-        .bottom-left {
-            bottom: -10px;
-            left: -10px;
-            border-right: none;
-            border-top: none;
-        }
-        
-        .bottom-right {
-            bottom: -10px;
-            right: -10px;
-            border-left: none;
-            border-top: none;
-        }
         
         @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
     </style>
@@ -129,138 +58,14 @@
     <div class="bouncing-circle"></div>
     <img src="src/images/GEAR4.png" alt="Gear4" class="corner-image top-left">
     <img src="src/images/Luffyroger.png" alt="Luffy Roger" class="corner-image bottom-right">
-    <div class="hello-text hello-line1 truefocus-container">
-        <span class="truefocus-word" data-word="0">HELLO</span>
-    </div>
-    <div class="hello-text hello-line2 truefocus-container">
-        <span class="truefocus-word" data-word="0">ITS</span>
-        <span class="truefocus-word" data-word="1">ME</span><span class="hello-dot">.</span>
-    </div>
-    <div class="luffy-text luffy-main" style="opacity:0;animation:showAfterHello 0.1s ease-in-out 5s forwards">NIKESH</div>
-    <div class="luffy-text luffy-sub" style="opacity:0;animation:showAfterHello 0.1s ease-in-out 5s forwards">PAUDYAL</div>
+    <div class="luffy-text luffy-main">NIKESH</div>
+    <div class="luffy-text luffy-sub">PAUDYAL</div>
     <img src="src/images/Luffy.png" alt="Luffy" class="luffy-image">
-    <div class="luffy-stroke luffy-stroke-main" style="opacity:0;animation:showAfterHello 0.1s ease-in-out 5s forwards">NIKESH</div>
+    <div class="luffy-stroke luffy-stroke-main">NIKESH</div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Original floating animation
             setTimeout(() => document.querySelector('.luffy-image').classList.add('floating'), 11000);
-            
-            // TrueFocus Effect - Initialize after text appears
-            let globalAnimationInterval = null;
-            
-            function initTrueFocus() {
-                // Only target words in hello containers, not the later NIKESH PAUDYAL text
-                const words = document.querySelectorAll('.hello-text .truefocus-word');
-                let currentIndex = 0;
-                let focusFrame = null;
-                
-                // Create focus frame
-                function createFocusFrame() {
-                    focusFrame = document.createElement('div');
-                    focusFrame.className = 'truefocus-frame';
-                    
-                    // Create corner elements
-                    const topLeft = document.createElement('span');
-                    topLeft.className = 'corner top-left';
-                    const topRight = document.createElement('span');
-                    topRight.className = 'corner top-right';
-                    const bottomLeft = document.createElement('span');
-                    bottomLeft.className = 'corner bottom-left';
-                    const bottomRight = document.createElement('span');
-                    bottomRight.className = 'corner bottom-right';
-                    
-                    focusFrame.appendChild(topLeft);
-                    focusFrame.appendChild(topRight);
-                    focusFrame.appendChild(bottomLeft);
-                    focusFrame.appendChild(bottomRight);
-                    
-                    document.body.appendChild(focusFrame);
-                }
-                
-                // Update focus frame position
-                function updateFocusFrame(word) {
-                    if (!focusFrame) createFocusFrame();
-                    
-                    const rect = word.getBoundingClientRect();
-                    const container = word.closest('.truefocus-container');
-                    const containerRect = container.getBoundingClientRect();
-                    
-                    focusFrame.style.left = (rect.left - containerRect.left + container.offsetLeft) + 'px';
-                    focusFrame.style.top = (rect.top - containerRect.top + container.offsetTop) + 'px';
-                    focusFrame.style.width = rect.width + 'px';
-                    focusFrame.style.height = rect.height + 'px';
-                    focusFrame.classList.add('visible');
-                }
-                
-                // Hide focus frame
-                function hideFocusFrame() {
-                    if (focusFrame) {
-                        focusFrame.classList.remove('visible');
-                    }
-                }
-                
-                // Start automatic animation
-                function startAnimation() {
-                    // Remove active class from all words
-                    words.forEach(w => w.classList.remove('active'));
-                    
-                    // Add active class to current word
-                    words[currentIndex].classList.add('active');
-                    
-                    // Show focus frame
-                    updateFocusFrame(words[currentIndex]);
-                    
-                    // Move to next word
-                    currentIndex++;
-                    
-                    // Stop when we reach the end (no cycling)
-                    if (currentIndex >= words.length) {
-                        clearInterval(animationInterval);
-                        // Hide focus frame when done
-                        setTimeout(() => {
-                            hideFocusFrame();
-                        }, 800);
-                    }
-                }
-                
-                // Start the animation sequence (runs once)
-                globalAnimationInterval = setInterval(startAnimation, 800); // 0.8 seconds per word
-            }
-            
-            // Initialize TrueFocus when the hello text appears (around 0.5 seconds)
-            setTimeout(initTrueFocus, 500);
-            
-            // Fade out focus frame at 4 seconds
-            setTimeout(() => {
-                const focusFrame = document.querySelector('.truefocus-frame');
-                
-                // Fade out the focus frame
-                if (focusFrame) {
-                    focusFrame.style.opacity = '0';
-                    focusFrame.classList.remove('visible');
-                    
-                    // Remove from DOM after fade completes
-                    setTimeout(() => {
-                        if (focusFrame && focusFrame.parentNode) {
-                            focusFrame.remove();
-                        }
-                    }, 500); // Wait for 0.5s fade to complete
-                }
-            }, 4000);
-            
-            // Stop TrueFocus when hello text disappears (at 5 seconds)
-            setTimeout(() => {
-                // Clear the animation interval
-                if (globalAnimationInterval) {
-                    clearInterval(globalAnimationInterval);
-                    globalAnimationInterval = null;
-                }
-                
-                const words = document.querySelectorAll('.hello-text .truefocus-word');
-                
-                // Remove active class from all words
-                words.forEach(w => w.classList.remove('active'));
-            }, 5000);
         });
     </script>
 </body>
