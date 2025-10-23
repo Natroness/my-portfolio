@@ -1,0 +1,84 @@
+.truefocus-container {
+  position: relative;
+  display: inline-block;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.truefocus-word {
+  position: relative;
+  display: inline;
+  transition: filter var(--animation-duration) ease-out;
+  cursor: pointer;
+}
+
+.truefocus-word:not(.active) {
+  filter: blur(var(--blur-amount));
+}
+
+.truefocus-word.active {
+  filter: blur(0);
+  z-index: 2;
+}
+
+.truefocus-frame {
+  position: absolute;
+  pointer-events: none;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: 
+    0 0 10px var(--glow-color),
+    0 0 20px var(--glow-color),
+    0 0 30px var(--glow-color);
+  background: transparent;
+  z-index: 1;
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+/* Smooth transitions for the frame */
+.truefocus-frame {
+  transition: 
+    left var(--animation-duration) ease-out,
+    top var(--animation-duration) ease-out,
+    width var(--animation-duration) ease-out,
+    height var(--animation-duration) ease-out,
+    opacity var(--animation-duration) ease-out;
+}
+
+/* Enhanced glow effect */
+.truefocus-frame::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: 
+    inset 0 0 5px var(--glow-color),
+    0 0 15px var(--glow-color);
+  opacity: 0.7;
+}
+
+/* Hover effects for better UX */
+.truefocus-word:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease-out;
+}
+
+/* Ensure smooth performance */
+.truefocus-container * {
+  will-change: filter, transform;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .truefocus-frame {
+    border-width: 1px;
+  }
+  
+  .truefocus-frame::before {
+    border-width: 0.5px;
+  }
+}
