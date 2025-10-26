@@ -1,0 +1,14 @@
+/* Optimized Shared Styles - Nikesh Paudyal Portfolio */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;font-family:'Black Ops One',monospace}
+.nav-buttons{position:absolute;top:20px;left:50%;transform:translateX(-50%);display:flex;gap:40px;z-index:7;opacity:1}
+.nav-btn{color:#8e03ba;text-decoration:none;font-size:18px;padding:12px 24px;border-radius:8px;transition:transform .3s ease,background-color .3s ease,color .3s ease,box-shadow .3s ease;position:relative;overflow:hidden;will-change:transform}
+.nav-btn:hover{background:#8e03ba;color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(142,3,186,.3)}
+.nav-btn.active{background:#8e03ba;color:#fff}
+.content{position:relative;top:120px;left:50%;transform:translateX(-50%);text-align:center;z-index:4;color:#8e03ba;width:90%;max-width:800px;margin-bottom:60px}
+.page-title{font-size:80px;font-weight:bold;margin-bottom:40px;letter-spacing:8px}
+.page-subtitle{font-size:24px;margin-bottom:60px;opacity:.8;letter-spacing:4px}
+@keyframes fadeIn{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
+.content > *{animation:fadeIn .8s ease-out forwards;opacity:0}
+.page-title{animation-delay:.2s}
+.page-subtitle{animation-delay:.4s}

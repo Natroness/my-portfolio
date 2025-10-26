@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Nikesh Paudyal - Portfolio</title>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap"></noscript>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#000;height:100vh;overflow:hidden;font-family:'Black Ops One',monospace;will-change:auto}
+        .nav-buttons{position:absolute;top:20px;left:50%;transform:translateX(-50%);display:flex;gap:40px;z-index:7;opacity:1}
+        .nav-btn{color:#8e03ba;text-decoration:none;font-size:18px;padding:12px 24px;border-radius:8px;transition:transform .3s ease,background-color .3s ease,color .3s ease,box-shadow .3s ease;position:relative;overflow:hidden;will-change:transform}
+        .nav-btn:hover{background:#8e03ba;color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(142,3,186,.3)}
+        .luffy-text{position:absolute;left:12.5%;width:75%;z-index:4;color:#8e03ba;text-align:center;pointer-events:none;opacity:1}
+        .luffy-main{font-size:280px;font-weight:bold;top:calc(25% + 150px);letter-spacing:20px;opacity:1}
+        .luffy-sub{font-size:32px;top:calc(60% + 150px);opacity:.8;letter-spacing:8px}
+        .luffy-stroke{position:absolute;left:12.5%;width:75%;z-index:6;color:transparent;text-align:center;pointer-events:none;-webkit-text-stroke:3px #8e03ba}
+        .luffy-stroke-main{font-size:280px;font-weight:bold;top:calc(25% + 150px);letter-spacing:20px}
+        .corner-image{position:absolute;max-width:450px;max-height:450px;z-index:2;opacity:1;animation:float 4s ease-in-out infinite;will-change:transform}
+        .corner-image.top-left{max-width:600px;max-height:600px;top:320px;left:320px;transform:translate(-50%,-50%);animation:none}
+        .top-left{top:80px;left:20px}
+        .bottom-right{bottom:20px;right:20px;animation-delay:2s}
+        .luffy-image{position:absolute;max-width:1000px;max-height:1000px;z-index:5;left:50%;bottom:45%;transform:translateX(-50%) translateY(290px);opacity:1;animation:luffyFloat 3s ease-in-out infinite;will-change:transform}
+        .luffy-image.floating{animation:luffyFloat 3s ease-in-out infinite}
+        .bouncing-circle{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:#fff;border-radius:50%;z-index:3;opacity:1;animation:bounceScale 6s ease-out forwards;box-shadow:0 0 30px rgba(142,3,186,.6),0 0 60px rgba(142,3,186,.4),0 0 90px rgba(142,3,186,.3),0 0 120px rgba(142,3,186,.2),0 0 150px rgba(142,3,186,.1);will-change:transform,width,height;backface-visibility:hidden;transform-style:preserve-3d}
+        .hello-dot{color:#fff;position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(142,3,186,.8),0 0 20px rgba(142,3,186,.6),0 0 30px rgba(142,3,186,.4);opacity:0;animation:showHelloDot .1s ease-in-out 5s forwards}
+        @keyframes showAfterHello{0%{opacity:0}100%{opacity:1}}
+        @keyframes showLuffyImage{0%{opacity:0}100%{opacity:1}}
+        @keyframes showBouncingCircle{0%{opacity:0}100%{opacity:1}}
+        @keyframes bounceScale{0%{width:50px;height:50px;transform:translate(-50%,-50%) scale(1)}60%{width:600px;height:600px;transform:translate(-50%,-50%) scale(1.05)}100%{width:530px;height:530px;transform:translate(-50%,-50%) scale(1)}}
+        @keyframes float{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(5px,-8px) rotate(1deg)}50%{transform:translate(-3px,-12px) rotate(-.5deg)}75%{transform:translate(-8px,-6px) rotate(.8deg)}100%{transform:translate(0,0) rotate(0)}}
+        @keyframes riseAndFloat{0%{bottom:-200px;transform:translateX(-50%) translateY(0)}60%{bottom:45%;transform:translateX(-50%) translateY(290px)}100%{bottom:45%;transform:translateX(-50%) translateY(290px)}}
+        @keyframes luffyFloat{0%,100%{transform:translateX(-50%) translateY(290px)}25%{transform:translateX(-50%) translateY(280px)}50%{transform:translateX(-50%) translateY(295px)}75%{transform:translateX(-50%) translateY(285px)}}
+    </style>
+</head>
+<body>
+    <nav class="nav-buttons">
+        <a href="about.html" class="nav-btn">About me</a>
+        <a href="projects.html" class="nav-btn">Projects</a>
+        <a href="education.html" class="nav-btn">Education</a>
+        <a href="contact.html" class="nav-btn">Contact</a>
+    </nav>
+    <div class="bouncing-circle"></div>
+    <img src="src/images/GEAR4.png" alt="Gear4" class="corner-image top-left" loading="eager" width="600" height="600">
+    <img src="src/images/Luffyroger.png" alt="Luffy Roger" class="corner-image bottom-right" loading="lazy" width="450" height="450">
+    <div class="luffy-text luffy-main">NIKESH</div>
+    <div class="luffy-text luffy-sub">PAUDYAL</div>
+    <img src="src/images/Luffy.png" alt="Luffy" class="luffy-image" loading="lazy" width="1000" height="1000">
+    <div class="luffy-stroke luffy-stroke-main">NIKESH</div>
+    <script>
+        (function(){
+            const luffyImg=document.querySelector('.luffy-image');
+            if(luffyImg)setTimeout(()=>luffyImg.classList.add('floating'),11000);
+        })();
+    </script>
+</body>
+</html>
