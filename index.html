@@ -11,10 +11,16 @@
         section{min-height:100vh;position:relative;scroll-margin-top:90px}
         
         /* Navigation */
-        .nav-buttons{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;gap:32px;z-index:1000;opacity:1;padding:14px 24px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);border-bottom:1px solid rgba(142,3,186,.25)}
+        .nav-buttons{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;gap:32px;z-index:1000;opacity:1;padding:14px 24px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);border-bottom:1px solid rgba(142,3,186,.25);transition:background-color .6s ease,border-color .6s ease}
         .nav-btn{color:#8e03ba;text-decoration:none;font-size:18px;padding:12px 24px;border-radius:8px;transition:all 0.3s ease;position:relative;overflow:hidden}
         .nav-btn:hover{background:#8e03ba;color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(142,3,186,0.3)}
         .nav-btn.active{background:rgba(142,3,186,.2);color:#fff}
+
+        /* Nav highlight when About is active */
+        .nav-buttons.about-active{background:#6cdfff;border-bottom-color:#6cdfff}
+        .nav-buttons.about-active .nav-btn{color:#000}
+        .nav-buttons.about-active .nav-btn.active{background:rgba(0,0,0,.12);color:#000}
+        .nav-buttons.about-active .nav-btn:hover{background:#000;color:#6cdfff}
 
         @media (max-width: 768px){
           .nav-buttons{gap:12px;padding:12px 10px}
@@ -351,8 +357,12 @@
                 entries.forEach(e=>{
                   if (e.isIntersecting) {
                     aboutSection.classList.add('is-active');
+                    const nav = document.querySelector('.nav-buttons');
+                    if (nav) nav.classList.add('about-active');
                   } else {
                     aboutSection.classList.remove('is-active');
+                    const nav = document.querySelector('.nav-buttons');
+                    if (nav) nav.classList.remove('about-active');
                   }
                 });
               }, {root: null, threshold: 0.01, rootMargin: '-45% 0px -45% 0px'});
@@ -362,15 +372,21 @@
                 aboutLink.addEventListener('click', ()=>{
                   // rely on IntersectionObserver to keep state; ensure active immediately
                   aboutSection.classList.add('is-active');
+                  const nav = document.querySelector('.nav-buttons');
+                  if (nav) nav.classList.add('about-active');
                 });
               }
               // Activate if user lands with #about in URL and keep it until scrolled away
               if (location.hash === '#about'){
                 aboutSection.classList.add('is-active');
+                const nav = document.querySelector('.nav-buttons');
+                if (nav) nav.classList.add('about-active');
               }
               window.addEventListener('hashchange', ()=>{
                 if (location.hash === '#about'){
                   aboutSection.classList.add('is-active');
+                  const nav = document.querySelector('.nav-buttons');
+                  if (nav) nav.classList.add('about-active');
                 }
               });
             }
