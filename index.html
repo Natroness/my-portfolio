@@ -350,43 +350,56 @@
 
             sections.forEach(sec => observer.observe(sec));
 
-            // About section background highlight on view, click, or hash navigation
+            // About highlight only when the Chopper image is fully visible
             const aboutSection = document.getElementById('about');
             if (aboutSection){
-              const aboutObserver = new IntersectionObserver((entries)=>{
-                entries.forEach(e=>{
-                  if (e.isIntersecting) {
-                    aboutSection.classList.add('is-active');
-                    const nav = document.querySelector('.nav-buttons');
-                    if (nav) nav.classList.add('about-active');
-                  } else {
-                    aboutSection.classList.remove('is-active');
-                    const nav = document.querySelector('.nav-buttons');
-                    if (nav) nav.classList.remove('about-active');
-                  }
-                });
-              }, {root: null, threshold: 0.01, rootMargin: '-45% 0px -45% 0px'});
-              aboutObserver.observe(aboutSection);
+              const navBar = document.querySelector('.nav-buttons');
+              const aboutImage = aboutSection.querySelector('.about-illustration img');
+              if (aboutImage){
+                const fullImageObserver = new IntersectionObserver((entries)=>{
+                  entries.forEach(e=>{
+                    if (e.isIntersecting) {
+                      aboutSection.classList.add('is-active');
+                      if (navBar) navBar.classList.add('about-active');
+                    } else {
+                      aboutSection.classList.remove('is-active');
+                      if (navBar) navBar.classList.remove('about-active');
+                    }
+                  });
+                }, {root: null, threshold: 1}); // fire only when image fully in viewport
+                fullImageObserver.observe(aboutImage);
+              } else {
+                // Fallback: section midpoint
+                const aboutObserver = new IntersectionObserver((entries)=>{
+                  entries.forEach(e=>{
+                    if (e.isIntersecting) {
+                      aboutSection.classList.add('is-active');
+                      if (navBar) navBar.classList.add('about-active');
+                    } else {
+                      aboutSection.classList.remove('is-active');
+                      if (navBar) navBar.classList.remove('about-active');
+                    }
+                  });
+                }, {root: null, threshold: 0.01, rootMargin: '-45% 0px -45% 0px'});
+                aboutObserver.observe(aboutSection);
+              }
               const aboutLink = document.querySelector('.nav-buttons a[href="#about"]');
               if (aboutLink){
                 aboutLink.addEventListener('click', ()=>{
-                  // rely on IntersectionObserver to keep state; ensure active immediately
+                  // Ensure active immediately; observer will keep it while criteria is met
                   aboutSection.classList.add('is-active');
-                  const nav = document.querySelector('.nav-buttons');
-                  if (nav) nav.classList.add('about-active');
+                  if (navBar) navBar.classList.add('about-active');
                 });
               }
               // Activate if user lands with #about in URL and keep it until scrolled away
               if (location.hash === '#about'){
                 aboutSection.classList.add('is-active');
-                const nav = document.querySelector('.nav-buttons');
-                if (nav) nav.classList.add('about-active');
+                if (navBar) navBar.classList.add('about-active');
               }
               window.addEventListener('hashchange', ()=>{
                 if (location.hash === '#about'){
                   aboutSection.classList.add('is-active');
-                  const nav = document.querySelector('.nav-buttons');
-                  if (nav) nav.classList.add('about-active');
+                  if (navBar) navBar.classList.add('about-active');
                 }
               });
             }
