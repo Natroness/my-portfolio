@@ -58,7 +58,18 @@
         .page-title{font-size:80px;font-weight:bold;margin-bottom:40px;letter-spacing:8px}
         .page-subtitle{font-size:24px;margin-bottom:60px;opacity:.8;letter-spacing:4px}
         /* About */
+        .about-section{transition:background-color .6s ease; background-color:transparent}
+        .about-section.is-active{background-color:#6cdfff}
+        .about-layout{display:flex;gap:40px;align-items:flex-start;justify-content:space-between}
+        .about-text-block{flex:1;min-width:0}
         .about-text{font-size:18px;line-height:1.8;text-align:left;margin-bottom:40px;opacity:.9}
+        .about-illustration{flex:0 1 420px;display:flex;align-items:center;justify-content:center;padding-top:120px}
+        .about-illustration img{max-width:100%;height:auto;border-radius:12px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.35));transform:scale(1.5);transform-origin:center}
+        @media (max-width: 992px){
+          .about-layout{flex-direction:column}
+          .about-illustration{order:-1;padding-top:140px}
+          .about-illustration img{transform:scale(1)}
+        }
         .skills-section{margin-top:60px}
         .skills-title{font-size:32px;margin-bottom:30px;letter-spacing:4px}
         .skills-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:30px}
@@ -138,17 +149,18 @@
         <div class="luffy-stroke luffy-stroke-main">NIKESH</div>
     </section>
 
-    <section id="about">
-        <div class="content">
-            <h1 class="page-title">ABOUT ME</h1>
-            <p class="page-subtitle">WHO I AM</p>
-            <div class="about-text">
+    <section id="about" class="about-section" aria-labelledby="about-title">
+        <div class="content about-layout" role="region" aria-label="About Me">
+            <div class="about-text-block">
+                <h1 id="about-title" class="page-title">ABOUT ME</h1>
+                <p class="page-subtitle">WHO I AM</p>
+                <div class="about-text">
                 <p>Motivated Computer Science junior pursuing a career in machine learning, with hands-on experience in building interactive AI applications and workflow automation tools. Skilled in Python and popular ML libraries such as OpenCV, gTTS, and FAISS, I am passionate about creating practical solutions that combine intelligent algorithms with real-world impact.</p>
                 
                 <p>Driven by curiosity and continuous learning, I actively seek opportunities to apply my skills through internships and collaborative projects, always aiming to deliver efficient, user-focused, and innovative technology solutions.</p>
                 
                 <p>My journey in technology began with curiosity about how machines can understand and interact with the world around us. This fascination led me to master computer vision, natural language processing, and large language models, while maintaining a strong foundation in traditional web development. I believe in the power of clean code, user-centered design, and continuous learning to build solutions that make a meaningful impact.</p>
-            </div>
+                </div>
             
             <div class="skills-section">
                 <h2 class="skills-title">SKILLS & EXPERTISE</h2>
@@ -197,6 +209,10 @@
                     </div>
                 </div>
             </div>
+            </div>
+            <aside class="about-illustration">
+                <img src="src/images/chopper.png" alt="Chopper character illustration" loading="lazy" width="300" height="300" />
+            </aside>
         </div>
     </section>
 
@@ -327,6 +343,37 @@
             }, { root: null, threshold: 0.55 });
 
             sections.forEach(sec => observer.observe(sec));
+
+            // About section background highlight on view, click, or hash navigation
+            const aboutSection = document.getElementById('about');
+            if (aboutSection){
+              const aboutObserver = new IntersectionObserver((entries)=>{
+                entries.forEach(e=>{
+                  if (e.isIntersecting) {
+                    aboutSection.classList.add('is-active');
+                  } else {
+                    aboutSection.classList.remove('is-active');
+                  }
+                });
+              }, {root: null, threshold: 0.01, rootMargin: '-45% 0px -45% 0px'});
+              aboutObserver.observe(aboutSection);
+              const aboutLink = document.querySelector('.nav-buttons a[href="#about"]');
+              if (aboutLink){
+                aboutLink.addEventListener('click', ()=>{
+                  // rely on IntersectionObserver to keep state; ensure active immediately
+                  aboutSection.classList.add('is-active');
+                });
+              }
+              // Activate if user lands with #about in URL and keep it until scrolled away
+              if (location.hash === '#about'){
+                aboutSection.classList.add('is-active');
+              }
+              window.addEventListener('hashchange', ()=>{
+                if (location.hash === '#about'){
+                  aboutSection.classList.add('is-active');
+                }
+              });
+            }
         });
     </script>
 </body>
