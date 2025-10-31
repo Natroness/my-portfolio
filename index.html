@@ -18,9 +18,9 @@
 
         /* Nav highlight when About is active */
         .nav-buttons.about-active{background:#6cdfff;border-bottom-color:#6cdfff}
-        .nav-buttons.about-active .nav-btn{color:#000}
-        .nav-buttons.about-active .nav-btn.active{background:rgba(0,0,0,.12);color:#000}
-        .nav-buttons.about-active .nav-btn:hover{background:#000;color:#6cdfff}
+        .nav-buttons.about-active .nav-btn{color:#fff}
+        .nav-buttons.about-active .nav-btn.active{background:rgba(255,255,255,.2);color:#fff}
+        .nav-buttons.about-active .nav-btn:hover{background:#000;color:#fff}
 
         @media (max-width: 768px){
           .nav-buttons{gap:12px;padding:12px 10px}
@@ -66,6 +66,8 @@
         /* About */
         .about-section{transition:background-color .6s ease; background-color:transparent}
         .about-section.is-active{background-color:#6cdfff}
+        .about-section.is-active .content{color:#fff}
+        .about-section.is-active .specialization-item h3{color:#fff}
         .about-layout{display:flex;gap:40px;align-items:flex-start;justify-content:space-between}
         .about-text-block{flex:1;min-width:0}
         .about-text{font-size:18px;line-height:1.8;text-align:left;margin-bottom:40px;opacity:.9}
@@ -161,11 +163,7 @@
                 <h1 id="about-title" class="page-title">ABOUT ME</h1>
                 <p class="page-subtitle">WHO I AM</p>
                 <div class="about-text">
-                <p>Motivated Computer Science junior pursuing a career in machine learning, with hands-on experience in building interactive AI applications and workflow automation tools. Skilled in Python and popular ML libraries such as OpenCV, gTTS, and FAISS, I am passionate about creating practical solutions that combine intelligent algorithms with real-world impact.</p>
-                
-                <p>Driven by curiosity and continuous learning, I actively seek opportunities to apply my skills through internships and collaborative projects, always aiming to deliver efficient, user-focused, and innovative technology solutions.</p>
-                
-                <p>My journey in technology began with curiosity about how machines can understand and interact with the world around us. This fascination led me to master computer vision, natural language processing, and large language models, while maintaining a strong foundation in traditional web development. I believe in the power of clean code, user-centered design, and continuous learning to build solutions that make a meaningful impact.</p>
+                <p>Passionate Computer Science junior specializing in machine learning and AI applications. Skilled in Python, OpenCV, and NLP, I love turning ideas into intelligent, user-focused solutions that make an impact.</p>
                 </div>
             
             <div class="skills-section">
