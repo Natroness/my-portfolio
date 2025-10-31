@@ -78,11 +78,14 @@
           .about-illustration{order:-1;padding-top:140px}
           .about-illustration img{transform:scale(1)}
         }
-        .skills-section{margin-top:60px}
-        .skills-title{font-size:32px;margin-bottom:30px;letter-spacing:4px}
+        .skills-section{margin-top:100px}
+        .skills-title{font-size:40px;margin-bottom:30px;letter-spacing:4px}
         .skills-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:30px}
-        .skill-item{background:rgba(142,3,186,.1);padding:20px;border-radius:8px;border:2px solid rgba(142,3,186,.3);transition:transform .3s ease,background-color .3s ease,border-color .3s ease}
+        .skill-item{background:rgba(142,3,186,.1);padding:20px;border-radius:8px;border:2px solid rgba(142,3,186,.3);transition:transform .3s ease,background-color .3s ease,border-color .3s ease;will-change:transform,opacity;backface-visibility:hidden}
         .skill-item:hover{background:rgba(142,3,186,.2);border-color:rgba(142,3,186,.5);transform:translateY(-5px)}
+        /* Emphasize first card (Programming Languages) */
+        .skills-list .skill-item:first-child h3{font-size:24px}
+        .skills-list .skill-item:first-child p{font-size:18px}
         .specializations-section{margin-top:60px}
         .specializations-title{font-size:32px;margin-bottom:30px;letter-spacing:4px}
         .specializations-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:30px}
@@ -139,6 +142,8 @@
 
         @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 </head>
 <body>
     <div class="nav-buttons">
@@ -218,6 +223,8 @@
                 <img src="src/images/chopper.png" alt="Chopper character illustration" loading="lazy" width="300" height="300" />
             </aside>
         </div>
+    
+    
     </section>
 
     <section id="projects">
@@ -302,17 +309,10 @@
         <div class="content">
             <h1 class="page-title">CONTACT</h1>
             <p class="page-subtitle">GET IN TOUCH</p>
-            <form class="contact-form">
-                <div class="form-group"><label class="form-label" for="name">Name</label><input type="text" id="name" name="name" class="form-input" required></div>
-                <div class="form-group"><label class="form-label" for="email">Email</label><input type="email" id="email" name="email" class="form-input" required></div>
-                <div class="form-group"><label class="form-label" for="subject">Subject</label><input type="text" id="subject" name="subject" class="form-input" required></div>
-                <div class="form-group"><label class="form-label" for="message">Message</label><textarea id="message" name="message" class="form-textarea" required></textarea></div>
-                <button type="submit" class="form-submit">SEND MESSAGE</button>
-            </form>
             <div class="contact-info">
                 <div class="contact-item"><div class="contact-icon">📧</div><h3 class="contact-title">Email</h3><p class="contact-details">nikeshpaudyal05@email.com<br>Available for freelance work</p></div>
                 <div class="contact-item"><div class="contact-icon">📱</div><h3 class="contact-title">Phone</h3><p class="contact-details">+1 (945) 273-3841</p></div>
-                <div class="contact-item"><div class="contact-icon">📍</div><h3 class="contact-title">Location</h3><p class="contact-details">Arlington,Tx<br>Open to remote work</p></div>
+                <div class="contact-item"><div class="contact-icon">📍</div><h3 class="contact-title">Location</h3><p class="contact-details">Arlington,Tx</p></div>
             </div>
             <div class="social-links">
                 <a href="https://www.linkedin.com/in/nikesh-paudyal-" class="social-link">LinkedIn</a>
@@ -400,6 +400,32 @@
                   if (navBar) navBar.classList.add('about-active');
                 }
               });
+            }
+            // GSAP ScrollTrigger animation for Skills section
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined'){
+              gsap.registerPlugin(ScrollTrigger);
+              const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              if (!reduceMotion){
+                const items = document.querySelectorAll('.skill-item');
+                items.forEach((el, i) => {
+                  gsap.from(el, {
+                    x: 80,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                    delay: i * 0.15,
+                    scrollTrigger: {
+                      trigger: el,
+                      start: 'top 85%',
+                      toggleActions: 'play none none reverse'
+                    }
+                  });
+                });
+                const lenis = window.lenis || window.Lenis;
+                if (lenis && lenis.on){
+                  try { lenis.on('scroll', () => ScrollTrigger.update()); } catch(e){}
+                }
+              }
             }
         });
     </script>
