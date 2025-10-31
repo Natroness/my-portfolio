@@ -81,11 +81,8 @@
         .skills-section{margin-top:100px}
         .skills-title{font-size:40px;margin-bottom:30px;letter-spacing:4px}
         .skills-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:30px}
-        .skill-item{background:rgba(142,3,186,.1);padding:20px;border-radius:8px;border:2px solid rgba(142,3,186,.3);transition:transform .3s ease,background-color .3s ease,border-color .3s ease;will-change:transform,opacity;backface-visibility:hidden}
-        .skill-item:hover{background:rgba(142,3,186,.2);border-color:rgba(142,3,186,.5);transform:translateY(-5px)}
-        /* Emphasize first card (Programming Languages) */
-        .skills-list .skill-item:first-child h3{font-size:24px}
-        .skills-list .skill-item:first-child p{font-size:18px}
+        .skill-item{background:transparent;padding:0;border:none;transition:none;will-change:transform,opacity;backface-visibility:hidden}
+        .skill-item:hover{background:transparent;border:none;transform:none}
         .specializations-section{margin-top:60px}
         .specializations-title{font-size:32px;margin-bottom:30px;letter-spacing:4px}
         .specializations-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:30px}
@@ -144,6 +141,24 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <style>
+        .skill-gallery-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+            margin-bottom: 20px;
+        }
+        .skill-gallery-container:active {
+            cursor: grabbing;
+        }
+        .skill-gallery-container canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
     <div class="nav-buttons">
@@ -175,28 +190,22 @@
                 <h2 class="skills-title">SKILLS & EXPERTISE</h2>
                 <div class="skills-list">
                     <div class="skill-item">
-                        <h3>Programming Languages</h3>
-                        <p>Python, JavaScript, C, C++, HTML, CSS</p>
+                        <div class="skill-gallery-container" data-title="Programming Languages" data-desc="Python, JavaScript, C, C++, HTML, CSS"></div>
                     </div>
                     <div class="skill-item">
-                        <h3>AI & Machine Learning</h3>
-                        <p>TensorFlow, OpenCV, dlib, Computer Vision, NLP, LLMs, RAG</p>
+                        <div class="skill-gallery-container" data-title="AI & Machine Learning" data-desc="TensorFlow, OpenCV, dlib, Computer Vision, NLP, LLMs, RAG"></div>
                     </div>
                     <div class="skill-item">
-                        <h3>Web Development</h3>
-                        <p>React, Node.js, Express, Frontend & Backend Architecture</p>
+                        <div class="skill-gallery-container" data-title="Web Development" data-desc="React, Node.js, Express, Frontend & Backend Architecture"></div>
                     </div>
                     <div class="skill-item">
-                        <h3>AI Tools & Frameworks</h3>
-                        <p>FAISS, LlamaIndex, Gradio, Jupyter Notebook</p>
+                        <div class="skill-gallery-container" data-title="AI Tools & Frameworks" data-desc="FAISS, LlamaIndex, Gradio, Jupyter Notebook"></div>
                     </div>
                     <div class="skill-item">
-                        <h3>Cloud & DevOps</h3>
-                        <p>AWS, Docker, Vercel, Linux, Git, GitHub</p>
+                        <div class="skill-gallery-container" data-title="Cloud & DevOps" data-desc="AWS, Docker, Vercel, Linux, Git, GitHub"></div>
                     </div>
                     <div class="skill-item">
-                        <h3>Development Environment</h3>
-                        <p>Google Colab, VS Code, Terminal, Version Control</p>
+                        <div class="skill-gallery-container" data-title="Development Environment" data-desc="Google Colab, VS Code, Terminal, Version Control"></div>
                     </div>
                 </div>
             </div>
@@ -426,6 +435,511 @@
                   try { lenis.on('scroll', () => ScrollTrigger.update()); } catch(e){}
                 }
               }
+            }
+        });
+    </script>
+    <script type="module">
+        // Import OGL and adapt circular.js for vanilla JS
+        // Using dynamic import with error handling
+        let Camera, Mesh, Plane, Program, Renderer, Texture, Transform;
+        
+        async function loadOGL() {
+            try {
+                // Try unpkg first (more reliable for ES modules)
+                const OGL = await import('https://unpkg.com/ogl@1.1.5/src/index.js');
+                ({ Camera, Mesh, Plane, Program, Renderer, Texture, Transform } = OGL);
+                console.log('OGL loaded from unpkg');
+                return true;
+            } catch (e1) {
+                try {
+                    // Fallback to jsdelivr
+                    const OGL = await import('https://cdn.jsdelivr.net/npm/ogl@1.1.5/src/index.js');
+                    ({ Camera, Mesh, Plane, Program, Renderer, Texture, Transform } = OGL);
+                    console.log('OGL loaded from jsdelivr');
+                    return true;
+                } catch (e2) {
+                    console.error('Failed to load OGL:', e1, e2);
+                    return false;
+                }
+            }
+        }
+        
+        // Check WebGL support
+        function checkWebGL() {
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) {
+                console.error('WebGL not supported!');
+                return false;
+            }
+            console.log('WebGL is supported');
+            return true;
+        }
+        
+        // Fallback: show plain text if WebGL/OGL fails
+        function showFallback() {
+            document.querySelectorAll('.skill-gallery-container').forEach(container => {
+                const title = container.getAttribute('data-title');
+                const desc = container.getAttribute('data-desc');
+                if (title && desc && !container.querySelector('canvas')) {
+                    container.innerHTML = `<div style="padding: 20px; color: #8e03ba; text-align: center; background: rgba(142,3,186,0.1); border: 2px solid rgba(142,3,186,0.3); border-radius: 8px;">
+                        <h3 style="font-size: 24px; margin-bottom: 10px;">${title}</h3>
+                        <p style="font-size: 16px;">${desc}</p>
+                    </div>`;
+                }
+            });
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        function lerp(p1, p2, t) {
+            return p1 + (p2 - p1) * t;
+        }
+
+        function autoBind(instance) {
+            const proto = Object.getPrototypeOf(instance);
+            Object.getOwnPropertyNames(proto).forEach(key => {
+                if (key !== 'constructor' && typeof instance[key] === 'function') {
+                    instance[key] = instance[key].bind(instance);
+                }
+            });
+        }
+
+        function createTextTexture(gl, text, font = 'bold 30px monospace', color = '#8e03ba') {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            context.font = font;
+            const metrics = context.measureText(text);
+            const textWidth = Math.ceil(metrics.width);
+            const textHeight = Math.ceil(parseInt(font, 10) * 1.2);
+            canvas.width = textWidth + 40;
+            canvas.height = textHeight + 60;
+            context.font = font;
+            context.fillStyle = color;
+            context.textBaseline = 'middle';
+            context.textAlign = 'center';
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.fillText(text, canvas.width / 2, canvas.height / 2);
+            const texture = new Texture(gl, { generateMipmaps: false });
+            texture.image = canvas;
+            return { texture, width: canvas.width, height: canvas.height };
+        }
+
+        function createRectangularTexture(gl, title, desc, textColor = '#8e03ba', bgColor = 'rgba(142,3,186,0.1)') {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = 600;
+            canvas.height = 400;
+            
+            // Draw background with border
+            context.fillStyle = bgColor;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.strokeStyle = 'rgba(142,3,186,0.3)';
+            context.lineWidth = 4;
+            context.strokeRect(2, 2, canvas.width - 4, canvas.height - 4);
+            
+            // Draw title
+            context.font = 'bold 32px "Black Ops One", monospace';
+            context.fillStyle = textColor;
+            context.textAlign = 'center';
+            context.textBaseline = 'top';
+            context.fillText(title, canvas.width / 2, 80);
+            
+            // Draw description
+            context.font = '18px "Black Ops One", monospace';
+            context.fillStyle = textColor;
+            const lines = desc.split(', ');
+            const lineHeight = 35;
+            lines.forEach((line, i) => {
+                context.fillText(line, canvas.width / 2, 160 + i * lineHeight);
+            });
+            
+            // Texture will be created using the loaded OGL classes
+            return { canvas, width: canvas.width, height: canvas.height };
+        }
+
+        // Classes will be defined after OGL loads
+        let SkillMedia, SkillGallery;
+        
+        // Define classes after OGL is loaded
+        function defineClasses() {
+            SkillMedia = class {
+                constructor({ geometry, gl, index, length, renderer, scene, screen, title, desc, viewport, bend, textColor }) {
+                    this.extra = 0;
+                    this.geometry = geometry;
+                    this.gl = gl;
+                    this.index = index;
+                    this.length = length;
+                    this.renderer = renderer;
+                    this.scene = scene;
+                    this.screen = screen;
+                    this.title = title;
+                    this.desc = desc;
+                    this.viewport = viewport;
+                    this.bend = bend;
+                    this.textColor = textColor;
+                    this.createShader();
+                    this.createMesh();
+                    this.onResize();
+                }
+
+                createShader() {
+                    const { canvas, width, height } = createRectangularTexture(this.gl, this.title, this.desc, this.textColor);
+                    const texture = new Texture(this.gl, { generateMipmaps: false });
+                    texture.image = canvas;
+                    this.program = new Program(this.gl, {
+                    depthTest: false,
+                    depthWrite: false,
+                    vertex: `
+                        precision highp float;
+                        attribute vec3 position;
+                        attribute vec2 uv;
+                        uniform mat4 modelViewMatrix;
+                        uniform mat4 projectionMatrix;
+                        uniform float uTime;
+                        uniform float uSpeed;
+                        varying vec2 vUv;
+                        void main() {
+                            vUv = uv;
+                            vec3 p = position;
+                            p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
+                            gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+                        }
+                    `,
+                    fragment: `
+                        precision highp float;
+                        uniform vec2 uImageSizes;
+                        uniform vec2 uPlaneSizes;
+                        uniform sampler2D tMap;
+                        uniform float uBorderRadius;
+                        varying vec2 vUv;
+                        
+                        float roundedBoxSDF(vec2 p, vec2 b, float r) {
+                            vec2 d = abs(p) - b;
+                            return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
+                        }
+                        
+                        void main() {
+                            vec2 ratio = vec2(
+                                min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
+                                min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
+                            );
+                            vec2 uv = vec2(
+                                vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+                                vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
+                            );
+                            vec4 color = texture2D(tMap, uv);
+                            
+                            float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), 0.05);
+                            float edgeSmooth = 0.002;
+                            float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
+                            
+                            gl_FragColor = vec4(color.rgb, alpha);
+                        }
+                    `,
+                    uniforms: {
+                        tMap: { value: texture },
+                        uPlaneSizes: { value: [0, 0] },
+                        uImageSizes: { value: [width, height] },
+                        uSpeed: { value: 0 },
+                        uTime: { value: 100 * Math.random() },
+                        uBorderRadius: { value: 0.05 }
+                    },
+                    transparent: true
+                    });
+                }
+
+                createMesh() {
+                this.plane = new Mesh(this.gl, {
+                    geometry: this.geometry,
+                    program: this.program
+                });
+                    this.plane.setParent(this.scene);
+                }
+
+                update(scroll, direction) {
+                this.plane.position.x = this.x - scroll.current - this.extra;
+                const x = this.plane.position.x;
+                const H = this.viewport.width / 2;
+                if (this.bend === 0) {
+                    this.plane.position.y = 0;
+                    this.plane.rotation.z = 0;
+                } else {
+                    const B_abs = Math.abs(this.bend);
+                    const R = (H * H + B_abs * B_abs) / (2 * B_abs);
+                    const effectiveX = Math.min(Math.abs(x), H);
+                    const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
+                    if (this.bend > 0) {
+                        this.plane.position.y = -arc;
+                        this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
+                    } else {
+                        this.plane.position.y = arc;
+                        this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
+                    }
+                }
+                this.speed = scroll.current - scroll.last;
+                this.program.uniforms.uTime.value += 0.04;
+                this.program.uniforms.uSpeed.value = this.speed;
+                }
+
+                onResize({ screen, viewport } = {}) {
+                if (screen) this.screen = screen;
+                if (viewport) {
+                    this.viewport = viewport;
+                }
+                this.scale = this.screen.height / 1500;
+                this.plane.scale.y = (this.viewport.height * (400 * this.scale)) / this.screen.height;
+                this.plane.scale.x = (this.viewport.width * (600 * this.scale)) / this.screen.width;
+                this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
+                this.padding = 2;
+                this.width = this.plane.scale.x + this.padding;
+                this.widthTotal = this.width * this.length;
+                this.x = this.width * this.index;
+                }
+            };
+
+            SkillGallery = class {
+            constructor(container, { title, desc, bend = 3, textColor = '#8e03ba', scrollSpeed = 2, scrollEase = 0.02 }) {
+                this.container = container;
+                this.scrollSpeed = scrollSpeed;
+                this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
+                this.onCheckDebounce = debounce(this.onCheck.bind(this), 200);
+                
+                // Create items array with the skill data
+                this.items = [{ title, desc, image: null }];
+                // Duplicate for seamless loop
+                this.items = this.items.concat(this.items);
+                
+                this.createRenderer();
+                this.createCamera();
+                this.createScene();
+                this.onResize();
+                this.createGeometry();
+                this.createMedias(bend, textColor);
+                this.update();
+                this.addEventListeners();
+            }
+
+            createRenderer() {
+                this.renderer = new Renderer({
+                    alpha: true,
+                    antialias: true,
+                    dpr: Math.min(window.devicePixelRatio || 1, 2)
+                });
+                this.gl = this.renderer.gl;
+                this.gl.clearColor(0, 0, 0, 0);
+                this.container.appendChild(this.gl.canvas);
+            }
+
+            createCamera() {
+                this.camera = new Camera(this.gl);
+                this.camera.fov = 45;
+                this.camera.position.z = 20;
+            }
+
+            createScene() {
+                this.scene = new Transform();
+            }
+
+            createGeometry() {
+                this.planeGeometry = new Plane(this.gl, {
+                    heightSegments: 50,
+                    widthSegments: 100
+                });
+            }
+
+            createMedias(bend, textColor) {
+                this.medias = this.items.map((data, index) => {
+                    return new SkillMedia({
+                        geometry: this.planeGeometry,
+                        gl: this.gl,
+                        index,
+                        length: this.items.length,
+                        renderer: this.renderer,
+                        scene: this.scene,
+                        screen: this.screen,
+                        title: data.title,
+                        desc: data.desc,
+                        viewport: this.viewport,
+                        bend,
+                        textColor
+                    });
+                });
+            }
+
+            onTouchDown(e) {
+                this.isDown = true;
+                this.scroll.position = this.scroll.current;
+                this.start = e.touches ? e.touches[0].clientX : e.clientX;
+            }
+
+            onTouchMove(e) {
+                if (!this.isDown) return;
+                const x = e.touches ? e.touches[0].clientX : e.clientX;
+                const distance = (this.start - x) * (this.scrollSpeed * 0.025);
+                this.scroll.target = this.scroll.position + distance;
+            }
+
+            onTouchUp() {
+                this.isDown = false;
+                this.onCheck();
+            }
+
+            onWheel(e) {
+                const delta = e.deltaY || e.wheelDelta || e.detail;
+                this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
+                this.onCheckDebounce();
+            }
+
+            onCheck() {
+                if (!this.medias || !this.medias[0]) return;
+                const width = this.medias[0].width;
+                const itemIndex = Math.round(Math.abs(this.scroll.target) / width);
+                const item = width * itemIndex;
+                this.scroll.target = this.scroll.target < 0 ? -item : item;
+            }
+
+            onResize() {
+                this.screen = {
+                    width: this.container.clientWidth,
+                    height: this.container.clientHeight
+                };
+                this.renderer.setSize(this.screen.width, this.screen.height);
+                this.camera.perspective({
+                    aspect: this.screen.width / this.screen.height
+                });
+                const fov = (this.camera.fov * Math.PI) / 180;
+                const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
+                const width = height * this.camera.aspect;
+                this.viewport = { width, height };
+                if (this.medias) {
+                    this.medias.forEach(media => media.onResize({ screen: this.screen, viewport: this.viewport }));
+                }
+            }
+
+            update() {
+                this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
+                const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
+                if (this.medias) {
+                    this.medias.forEach(media => {
+                        media.update(this.scroll, direction);
+                        const planeOffset = media.plane.scale.x / 2;
+                        const viewportOffset = this.viewport.width / 2;
+                        const isBefore = media.plane.position.x + planeOffset < -viewportOffset;
+                        const isAfter = media.plane.position.x - planeOffset > viewportOffset;
+                        if (direction === 'right' && isBefore) {
+                            media.extra -= media.widthTotal;
+                        }
+                        if (direction === 'left' && isAfter) {
+                            media.extra += media.widthTotal;
+                        }
+                    });
+                }
+                this.renderer.render({ scene: this.scene, camera: this.camera });
+                this.scroll.last = this.scroll.current;
+                this.raf = window.requestAnimationFrame(this.update.bind(this));
+            }
+
+            addEventListeners() {
+                this.boundOnResize = this.onResize.bind(this);
+                this.boundOnWheel = this.onWheel.bind(this);
+                this.boundOnTouchDown = this.onTouchDown.bind(this);
+                this.boundOnTouchMove = this.onTouchMove.bind(this);
+                this.boundOnTouchUp = this.onTouchUp.bind(this);
+                window.addEventListener('resize', this.boundOnResize);
+                this.container.addEventListener('wheel', this.boundOnWheel, { passive: false });
+                this.container.addEventListener('mousedown', this.boundOnTouchDown);
+                this.container.addEventListener('mousemove', this.boundOnTouchMove);
+                this.container.addEventListener('mouseup', this.boundOnTouchUp);
+                this.container.addEventListener('touchstart', this.boundOnTouchDown);
+                this.container.addEventListener('touchmove', this.boundOnTouchMove);
+                this.container.addEventListener('touchend', this.boundOnTouchUp);
+            }
+
+            destroy() {
+                window.cancelAnimationFrame(this.raf);
+                window.removeEventListener('resize', this.boundOnResize);
+                if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
+                    this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
+                }
+            };
+        };
+        }
+
+        // Initialize circular galleries for each skill
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                console.log('Initializing circular galleries...');
+                
+                // Check WebGL support
+                if (!checkWebGL()) {
+                    console.warn('WebGL not supported, showing fallback');
+                    showFallback();
+                    return;
+                }
+                
+                // Load OGL library
+                const oglLoaded = await loadOGL();
+                if (!oglLoaded) {
+                    console.warn('OGL library failed to load, showing fallback');
+                    showFallback();
+                    return;
+                }
+                
+                // Define classes now that OGL is loaded
+                defineClasses();
+                
+                const skillContainers = document.querySelectorAll('.skill-gallery-container');
+                console.log(`Found ${skillContainers.length} skill containers`);
+                
+                if (skillContainers.length === 0) {
+                    console.error('No skill containers found!');
+                    return;
+                }
+                
+                const galleries = [];
+                
+                skillContainers.forEach((container, index) => {
+                    const title = container.getAttribute('data-title');
+                    const desc = container.getAttribute('data-desc');
+                    
+                    console.log(`Container ${index}:`, { title, desc });
+                    
+                    if (title && desc) {
+                        try {
+                            const gallery = new SkillGallery(container, {
+                                title,
+                                desc,
+                                bend: 3,
+                                textColor: '#8e03ba',
+                                scrollSpeed: 2,
+                                scrollEase: 0.02
+                            });
+                            galleries.push(gallery);
+                            console.log(`Gallery ${index} initialized successfully`);
+                        } catch (error) {
+                            console.error(`Error initializing gallery ${index}:`, error);
+                            // Show fallback for this specific container
+                            container.innerHTML = `<div style="padding: 20px; color: #8e03ba; text-align: center; background: rgba(142,3,186,0.1); border: 2px solid rgba(142,3,186,0.3); border-radius: 8px;">
+                                <h3 style="font-size: 24px; margin-bottom: 10px;">${title}</h3>
+                                <p style="font-size: 16px;">${desc}</p>
+                            </div>`;
+                        }
+                    } else {
+                        console.warn(`Container ${index} missing title or desc`);
+                    }
+                });
+                
+                console.log(`Successfully initialized ${galleries.length} galleries`);
+            } catch (error) {
+                console.error('Error in circular gallery initialization:', error);
+                showFallback();
             }
         });
     </script>
